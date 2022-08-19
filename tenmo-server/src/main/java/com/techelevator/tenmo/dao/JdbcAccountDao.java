@@ -25,6 +25,13 @@ public class JdbcAccountDao implements AccountDao{
         return account;
     }
 
+    @Override
+    public void update(int id, Account account) {
+        String sql = "UPDATE account set balance = ? WHERE user_id = ?;";
+        jdbcTemplate.update(sql,account.getBalance(),id);
+
+    }
+
     private Account mapRowToAccount(SqlRowSet results) {
         Account account = new Account();
         account.setId(results.getLong("account_id"));

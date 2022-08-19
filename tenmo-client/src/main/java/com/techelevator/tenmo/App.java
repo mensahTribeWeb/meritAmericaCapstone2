@@ -6,6 +6,7 @@ import com.techelevator.tenmo.model.UserCredentials;
 import com.techelevator.tenmo.services.AccountService;
 import com.techelevator.tenmo.services.AuthenticationService;
 import com.techelevator.tenmo.services.ConsoleService;
+import com.techelevator.tenmo.services.UserService;
 
 public class App {
 
@@ -14,6 +15,7 @@ public class App {
     private final ConsoleService consoleService = new ConsoleService();
     private final AuthenticationService authenticationService = new AuthenticationService(API_BASE_URL);
     private final AccountService accountService = new AccountService(API_BASE_URL);
+    private final UserService userService = new UserService(API_BASE_URL);
 
     private AuthenticatedUser currentUser;
 
@@ -99,7 +101,7 @@ public class App {
 
 	private void viewTransferHistory() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	private void viewPendingRequests() {
@@ -109,6 +111,23 @@ public class App {
 
 	private void sendBucks() {
 		// TODO Auto-generated method stub
+        if(currentUser.getToken() != null) {
+            accountService.setAuthToken(currentUser.getToken());
+        }
+        else {
+            System.out.println("Not Authorized");
+        }
+        consoleService.printUsers(userService.listUsers());
+        int userId = consoleService.promptForInt("Please Enter ID of user you are sending to (0 to cancel): ");
+        if(userId == 0) {
+            return;
+        }
+        double transferAmount = consoleService.promptForBigDecimal("Enter Amount to Send: ").doubleValue();
+        Account toAccount = accountService.getAccountByUserId(userId);
+        Account currentAccount = accountService.getAccountByUserId(Math.toIntExact(currentUser.getUser().getId()));
+        currentAccount.transferTo(toAccount,transferAmount);
+        accountService.update(Math.toIntExact(currentUser.getUser().getId()),currentAccount);
+        accountService.update(userId,toAccount);
 		
 	}
 

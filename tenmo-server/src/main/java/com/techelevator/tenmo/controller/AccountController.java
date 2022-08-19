@@ -1,25 +1,28 @@
 package com.techelevator.tenmo.controller;
 
+import com.techelevator.tenmo.dao.AccountDao;
 import com.techelevator.tenmo.dao.JdbcAccountDao;
 import com.techelevator.tenmo.model.Account;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @PreAuthorize("isAuthenticated()")
 public class AccountController {
 
-    private JdbcAccountDao jdbcAccountDao;
+    private AccountDao accountDao;
 
     public AccountController(JdbcAccountDao jdbcAccountDao) {
-        this.jdbcAccountDao = jdbcAccountDao;
+        this.accountDao = jdbcAccountDao;
     }
 
     @GetMapping(value = "{id}/account")
     public Account getAccountByUserId(@PathVariable int id) {
-        return jdbcAccountDao.findAccountByUserId(id);
+        return accountDao.findAccountByUserId(id);
+    }
+
+    @PutMapping(value = "{id}/account")
+    public void update(@PathVariable int id, @RequestBody Account account) {
+        accountDao.update(id,account);
     }
 }

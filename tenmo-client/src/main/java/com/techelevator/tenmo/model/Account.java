@@ -29,5 +29,18 @@ public class Account {
         this.balance = balance;
     }
 
+    public void transferTo(Account anotherAccount, double transferAmount) {
+        this.withdraw(transferAmount);
+        anotherAccount.deposit(transferAmount);
+    }
+
+    public void deposit(double amount) {
+        this.balance += amount;
+    }
+
+    public void withdraw(double amount) {
+        this.balance -= amount;
+    }
+
 
 }
