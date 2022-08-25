@@ -1,15 +1,15 @@
 package com.techelevator.tenmo.model;
 
 public class Account {
-    private Long id;
+    private int id;
     private int userId;
     private double balance;
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
