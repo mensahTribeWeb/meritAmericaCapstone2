@@ -28,6 +28,7 @@ public class App {
         consoleService.printGreeting();
         loginMenu();
         if (currentUser != null) {
+            accountService.setAuthToken(currentUser.getToken());
             mainMenu();
         }
     }
@@ -91,11 +92,9 @@ public class App {
 
 	private void viewCurrentBalance() {
 		// TODO Auto-generated method stub
-        if(currentUser.getToken() != null) {
-            accountService.setAuthToken(currentUser.getToken());
-        }
-        System.out.println
-                ("Your current account balance is: " + accountService.getAccountByUserId(Math.toIntExact(currentUser.getUser().getId())).getBalance());
+
+        consoleService.printAccountBalance(accountService.getAccountByUserId(Math.toIntExact(getCurrentUserId())));
+
 		
 	}
 
@@ -135,5 +134,10 @@ public class App {
 		// TODO Auto-generated method stub
 		
 	}
+
+    private Long getCurrentUserId() {
+        return currentUser.getUser().getId();
+    }
+
 
 }

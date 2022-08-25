@@ -1,10 +1,12 @@
 package com.techelevator.tenmo.services;
 
 
+import com.techelevator.tenmo.model.Account;
 import com.techelevator.tenmo.model.User;
 import com.techelevator.tenmo.model.UserCredentials;
 
 import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.util.Scanner;
 
 public class ConsoleService {
@@ -93,5 +95,9 @@ public class ConsoleService {
         for (User listUser : listUsers) {
             System.out.println(listUser.getId() + ": " + listUser.getUsername());
         }
+    }
+
+    public void printAccountBalance(Account account) {
+        System.out.printf("Your current account balance is: %s\n", NumberFormat.getCurrencyInstance().format(account.getBalance()));
     }
 }
