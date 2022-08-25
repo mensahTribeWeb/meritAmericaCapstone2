@@ -111,4 +111,12 @@ public class ConsoleService {
         System.out.println("ID          Name");
         System.out.println("-------------------------------------------");
     }
+
+    public void printViewTransferHeader() {
+        System.out.println("-------------------------------------------");
+        System.out.println("Transfers");
+        System.out.println("ID          From/To                 Amount");
+        System.out.println("-------------------------------------------");
+
+    }
 }

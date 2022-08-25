@@ -101,6 +101,12 @@ public class App {
 
 	private void viewTransferHistory() {
 		// TODO Auto-generated method stub
+        consoleService.printViewTransferHeader();
+        //TODO Print List of Transfers here
+        int choice = consoleService.promptForInt("Please enter transfer ID to view details (0 to cancel): ");
+        if(choice > 0) {//Change to == 0 when Transfer class exists
+            return;
+        }
 
 	}
 
@@ -115,8 +121,8 @@ public class App {
         consoleService.printSendFundsHeader();
         consoleService.printUsers(userService.listUsers(), currentUser.getUser());
         int userId = consoleService.promptForInt("Please Enter ID of user you are sending to (0 to cancel): ");
-        while (userId == getCurrentUserId()) {
-            userId = consoleService.promptForInt("Cannot send to own account. Select a different ID (0 to cancel): ");
+        while (userId == getCurrentUserId() || userId < 0) {
+            userId = consoleService.promptForInt("Invalid Choice. Select a different ID (0 to cancel): ");
         }
         if(userId == 0) {
             return;
