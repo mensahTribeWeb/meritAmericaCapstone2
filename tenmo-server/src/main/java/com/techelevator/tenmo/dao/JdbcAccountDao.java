@@ -32,6 +32,19 @@ public class JdbcAccountDao implements AccountDao{
 
     }
 
+    @Override
+    public Account findByUsername(String name) {
+        Account account = null;
+        String sql = "SELECT a.account_id, a.user_id, a.balance FROM account AS a " +
+                "JOIN tenmo_user u ON u.user_id = a.user_id " +
+                "WHERE u.username ILIKE ?;";
+        SqlRowSet result = jdbcTemplate.queryForRowSet(sql,name);
+        if(result.next()) {
+            account = mapRowToAccount(result);
+        }
+        return account;
+    }
+
     private Account mapRowToAccount(SqlRowSet results) {
         Account account = new Account();
         account.setId(results.getLong("account_id"));

@@ -11,4 +11,5 @@ public interface AccountDao {
     Account findAccountByUserId(int id);
     void update(int id, Account account);
 
+    Account findByUsername(String name);
 }

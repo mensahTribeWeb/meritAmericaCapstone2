@@ -6,6 +6,8 @@ import com.techelevator.tenmo.model.Account;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
 @RestController
 @PreAuthorize("isAuthenticated()")
 public class AccountController {
@@ -23,6 +25,6 @@ public class AccountController {
 
     @PutMapping(value = "{id}/account")
     public void update(@PathVariable int id, @RequestBody Account account) {
-        accountDao.update(id,account);
+        accountDao.update(id, account);
     }
 }
