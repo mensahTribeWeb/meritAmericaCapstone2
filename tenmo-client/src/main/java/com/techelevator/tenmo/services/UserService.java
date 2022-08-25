@@ -19,6 +19,10 @@ public class UserService {
         this.baseUrl = baseUrl;
     }
 
+    public void setAuthToken(String authToken) {
+        this.authToken = authToken;
+    }
+
     public User[] listUsers() {
         User[] users = null;
         try {

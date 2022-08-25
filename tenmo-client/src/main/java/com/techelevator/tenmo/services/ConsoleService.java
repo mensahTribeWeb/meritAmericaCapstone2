@@ -91,13 +91,24 @@ public class ConsoleService {
         System.out.println("An error occurred. Check the log for details.");
     }
 
-    public void printUsers(User[] listUsers) {
+    public void printUsers(User[] listUsers, User currentUser) {
         for (User listUser : listUsers) {
-            System.out.println(listUser.getId() + ": " + listUser.getUsername());
+            if(listUser.equals(currentUser)) {
+                continue;
+            }
+            System.out.printf("%-12d%s\n", listUser.getId(), listUser.getUsername());
         }
+        System.out.println("-------------------------------------------");
     }
 
     public void printAccountBalance(Account account) {
         System.out.printf("Your current account balance is: %s\n", NumberFormat.getCurrencyInstance().format(account.getBalance()));
+    }
+
+    public void printSendFundsHeader() {
+        System.out.println("-------------------------------------------");
+        System.out.println("Users");
+        System.out.println("ID          Name");
+        System.out.println("-------------------------------------------");
     }
 }

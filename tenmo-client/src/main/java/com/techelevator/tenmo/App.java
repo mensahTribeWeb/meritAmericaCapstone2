@@ -29,6 +29,7 @@ public class App {
         loginMenu();
         if (currentUser != null) {
             accountService.setAuthToken(currentUser.getToken());
+            userService.setAuthToken(currentUser.getToken());
             mainMenu();
         }
     }
@@ -93,7 +94,7 @@ public class App {
 	private void viewCurrentBalance() {
 		// TODO Auto-generated method stub
 
-        consoleService.printAccountBalance(accountService.getAccountByUserId(Math.toIntExact(getCurrentUserId())));
+        consoleService.printAccountBalance(accountService.getAccountByUserId(getCurrentUserId()));
 
 		
 	}
@@ -110,22 +111,22 @@ public class App {
 
 	private void sendBucks() {
 		// TODO Auto-generated method stub
-        if(currentUser.getToken() != null) {
-            accountService.setAuthToken(currentUser.getToken());
-        }
-        else {
-            System.out.println("Not Authorized");
-        }
-        consoleService.printUsers(userService.listUsers());
+
+        consoleService.printSendFundsHeader();
+        consoleService.printUsers(userService.listUsers(), currentUser.getUser());
         int userId = consoleService.promptForInt("Please Enter ID of user you are sending to (0 to cancel): ");
+        while (userId == getCurrentUserId()) {
+            userId = consoleService.promptForInt("Cannot send to own account. Select a different ID (0 to cancel): ");
+        }
         if(userId == 0) {
             return;
         }
+
         double transferAmount = consoleService.promptForBigDecimal("Enter Amount to Send: ").doubleValue();
         Account toAccount = accountService.getAccountByUserId(userId);
-        Account currentAccount = accountService.getAccountByUserId(Math.toIntExact(currentUser.getUser().getId()));
+        Account currentAccount = accountService.getAccountByUserId(getCurrentUserId());
         currentAccount.transferTo(toAccount,transferAmount);
-        accountService.update(Math.toIntExact(currentUser.getUser().getId()),currentAccount);
+        accountService.update(getCurrentUserId(),currentAccount);
         accountService.update(userId,toAccount);
 		
 	}
@@ -135,8 +136,8 @@ public class App {
 		
 	}
 
-    private Long getCurrentUserId() {
-        return currentUser.getUser().getId();
+    private int getCurrentUserId() {
+        return Math.toIntExact(currentUser.getUser().getId());
     }
 
 
