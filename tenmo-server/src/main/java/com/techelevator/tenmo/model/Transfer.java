@@ -15,6 +15,7 @@ public class Transfer {
     private int account_to;
     @DecimalMin(value = "0.01", message = "A transfer must have a minimum value of 0.01")
     private BigDecimal transfer_amount;
+    
     //Constructors
     public Transfer() {
     }
