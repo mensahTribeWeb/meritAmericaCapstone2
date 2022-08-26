@@ -56,7 +56,6 @@ public class JdbcTransferDao implements TransferDao{
            transferHistory.add(transfer);
         }
         return transferHistory;
-
     }
 
     @Override
@@ -71,6 +70,10 @@ public class JdbcTransferDao implements TransferDao{
             fetchedTransfer = mapRowToTransfer(results);
         }
         return fetchedTransfer;
+    }
+    @Override
+    public Transfer create(Transfer transfer){
+
     }
 
     private Transfer mapRowToTransfer(SqlRowSet results) {

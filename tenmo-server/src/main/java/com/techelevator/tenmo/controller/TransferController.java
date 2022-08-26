@@ -12,20 +12,10 @@ import java.math.BigDecimal;
 @RestController
 @PreAuthorize("isAuthenticated()")
 public class TransferController {
-    TransferDao transferDao;
+
+    private TransferDao transferDao;
 
 
 
-    @GetMapping ("/balance/{id}")
-    public BigDecimal getBalance(@PathVariable Long id){
-        BigDecimal balance = AccountDao.getTransferHistory(int id);
-        return balance;
-    }
-//
-//    //V. The sender's account balance is decreased by the amount of the transfer.
-//    @PutMapping("/tenmo_user/balance")
-//    public void transfer.Create(@RequestBody Transfer transfer){
-//        dao.update
-//    }
 
 }
