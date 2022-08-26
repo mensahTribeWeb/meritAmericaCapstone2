@@ -29,7 +29,16 @@ public class Account {
         this.balance = balance;
     }
 
-    public void transferTo(Account anotherAccount, double transferAmount) {
+    public void transferTo(Account anotherAccount, double transferAmount) throws IllegalArgumentException {
+        if(this.equals(anotherAccount)) {
+            throw new IllegalArgumentException("Cannot transfer money to self.");
+        }
+        if(transferAmount <= 0) {
+            throw new IllegalArgumentException("Transfer amount must be greater than 0.");
+        }
+        if(this.balance < transferAmount) {
+            throw new IllegalArgumentException("Insufficient Funds.");
+        }
         this.withdraw(transferAmount);
         anotherAccount.deposit(transferAmount);
     }

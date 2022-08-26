@@ -14,15 +14,15 @@ public class TransferStatusService {
         this.baseUrl = baseUrl;
     }
 
-    public Transfer getTransferByStatus(String status) {
-        Transfer transfer= null;
-        try
-        {
-            transfer = restTemplate .getForObject(baseUrl + "transfers/?status_like=" + status, Transfer.class);
-        }
-        catch (RestClientResponseException | ResourceAccessException e) {
-            BasicLogger.log(e.getMessage());
-        }
-        return transfer;
-    }
+//    public Transfer getTransferByStatus(String status) {
+//        Transfer transfer= null;
+//        try
+//        {
+//            transfer = restTemplate .getForObject(baseUrl + "transfers/?status_like=" + status, Transfer.class);
+//        }
+//        catch (RestClientResponseException | ResourceAccessException e) {
+//            BasicLogger.log(e.getMessage());
+//        }
+//        return transfer;
+//    }
 }

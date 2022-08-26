@@ -22,4 +22,6 @@ public interface TransferDao  {
 
 
     Transfer getTransferDetails(int id);
+
+    Transfer create(Transfer transfer);
 }

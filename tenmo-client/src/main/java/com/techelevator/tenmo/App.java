@@ -7,6 +7,7 @@ import com.techelevator.tenmo.services.AccountService;
 import com.techelevator.tenmo.services.AuthenticationService;
 import com.techelevator.tenmo.services.ConsoleService;
 import com.techelevator.tenmo.services.UserService;
+import com.techelevator.util.BasicLogger;
 
 public class App {
 
@@ -131,9 +132,15 @@ public class App {
         double transferAmount = consoleService.promptForBigDecimal("Enter Amount to Send: ").doubleValue();
         Account toAccount = accountService.getAccountByUserId(userId);
         Account currentAccount = accountService.getAccountByUserId(getCurrentUserId());
-        currentAccount.transferTo(toAccount,transferAmount);
+        try {
+            currentAccount.transferTo(toAccount, transferAmount);
+        } catch (IllegalArgumentException e) {
+            BasicLogger.log(e.getMessage());
+            consoleService.printErrorMessage();
+        }
         accountService.update(getCurrentUserId(),currentAccount);
         accountService.update(userId,toAccount);
+
 		
 	}
 
