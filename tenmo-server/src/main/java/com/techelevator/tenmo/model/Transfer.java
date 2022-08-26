@@ -15,17 +15,16 @@ public class Transfer {
     private int account_to;
     @DecimalMin(value = "0.01", message = "A transfer must have a minimum value of 0.01")
     private BigDecimal transfer_amount;
+    
     //Constructors
     public Transfer() {
     }
 
-    public Transfer(int transfer_id,
-                    int transfer_type_id,
+    public Transfer(int transfer_type_id,
                     int transfer_status_id,
                     int account_from,
                     int account_to,
                     BigDecimal transfer_amount) {
-        this.transfer_id = transfer_id;
         this.transfer_type_id = transfer_type_id;
         this.transfer_status_id = transfer_status_id;
         this.account_from = account_from;
