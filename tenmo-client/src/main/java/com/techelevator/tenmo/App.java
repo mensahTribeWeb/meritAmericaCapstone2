@@ -121,7 +121,7 @@ public class App {
         consoleService.printSendFundsHeader();
         consoleService.printUsers(userService.listUsers(), currentUser.getUser());
         int userId = consoleService.promptForInt("Please Enter ID of user you are sending to (0 to cancel): ");
-        while (userId == getCurrentUserId() || userId < 0) {
+        while (!isValidSendId(userId)) {
             userId = consoleService.promptForInt("Invalid Choice. Select a different ID (0 to cancel): ");
         }
         if(userId == 0) {
@@ -144,6 +144,21 @@ public class App {
 
     private int getCurrentUserId() {
         return Math.toIntExact(currentUser.getUser().getId());
+    }
+
+    /**
+     * Validates whether the ID provided is a valid ID to send to from the user
+     * @param id The ID of the User being sent money
+     * @return True if id is a valid user ID or 0, False otherwise
+     */
+    private boolean isValidSendId(int id) {
+        if(id == 0) {
+            return true;
+        }
+        if(id == getCurrentUserId()) {
+            return false;
+        }
+        return accountService.getAccountByUserId(id) != null;
     }
 
 
