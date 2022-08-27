@@ -3,7 +3,6 @@ package com.techelevator.tenmo;
 import com.techelevator.tenmo.model.*;
 import com.techelevator.tenmo.services.*;
 import com.techelevator.util.BasicLogger;
-import io.cucumber.java.en_old.Ac;
 
 public class App {
 
@@ -201,19 +200,26 @@ public class App {
         else if (transferService.getById(id) == null){
             return false;
         }
-        else if(transferService.getById(id).getFromAccountId() != getCurrentAccount().getId() &&
-                transferService.getById(id).getToAccountId() != getCurrentAccount().getId()) {
-            return false;
-        }
-        return true;
+        else return transferService.getById(id).getFromAccountId() == getCurrentAccount().getId() ||
+                    transferService.getById(id).getToAccountId() == getCurrentAccount().getId();
 
     }
 
+    /**
+     * Sends a request to retrieve the type ID of the String provided
+     * @param type The type associated with the Transfer
+     * @return The id of the TransferType
+     */
     private int getTypeId(String type) {
         TransferType transferType = transferTypeService.getByType(type);
         return Math.toIntExact(transferType.getTransferTypeId());
     }
 
+    /**
+     * Sends a request to retrieve the status ID of the String provided
+     * @param status The Status associated with the Transfer
+     * @return The id of the TransferStatus
+     */
     private int getStatusId(String status) {
         TransferStatus transferStatus = transferStatusService.getByType(status);
         return Math.toIntExact(transferStatus.getTransferStatusId());

@@ -119,6 +119,12 @@ public class ConsoleService {
 
     }
 
+    /**
+     * Prints all available transfer history a user has access too.
+     * @param transfers An array of all available transfers
+     * @param service The UserService to handle User based requests
+     * @param currentAccountId The current User's account Id; used to determine which transfers the user can see
+     */
     public void printAvailableTransfers(Transfer[] transfers, UserService service, int currentAccountId) {
         for (Transfer transfer : transfers) {
             String toFrom;
@@ -141,6 +147,11 @@ public class ConsoleService {
         }
     }
 
+    /**
+     * Formats the value passed into a String currency
+     * @param amount The amount to format
+     * @return amount in the form of currency (EX: 8 => $8.00)
+     */
     private String getFormattedAmount(double amount) {
         return numberFormat.format(amount);
     }

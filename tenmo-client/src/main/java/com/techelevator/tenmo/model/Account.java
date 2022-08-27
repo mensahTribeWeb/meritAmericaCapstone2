@@ -38,6 +38,12 @@ public class Account {
         this.balance = balance;
     }
 
+    /**
+     * Transfers the amount of funds specified to the target account
+     * @param anotherAccount The account to be transferred to.
+     * @param transferAmount The amount to be transferred
+     * @throws IllegalArgumentException When anotherAccount is the current account, or if amount is not valid
+     */
     public void transferTo(Account anotherAccount, double transferAmount) throws IllegalArgumentException {
         if(this.equals(anotherAccount)) {
             throw new IllegalArgumentException("Cannot transfer money to self.");
@@ -52,10 +58,18 @@ public class Account {
         anotherAccount.deposit(transferAmount);
     }
 
+    /**
+     * Deposits the specified amount into this account
+     * @param amount The amount to be deposited
+     */
     public void deposit(double amount) {
         this.balance += amount;
     }
 
+    /**
+     * Withdraws the specified amount from this account
+     * @param amount The amount to be withdrawn
+     */
     public void withdraw(double amount) {
         this.balance -= amount;
     }
