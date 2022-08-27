@@ -1,9 +1,6 @@
 package com.techelevator.tenmo;
 
-import com.techelevator.tenmo.model.Account;
-import com.techelevator.tenmo.model.AuthenticatedUser;
-import com.techelevator.tenmo.model.Transfer;
-import com.techelevator.tenmo.model.UserCredentials;
+import com.techelevator.tenmo.model.*;
 import com.techelevator.tenmo.services.*;
 import com.techelevator.util.BasicLogger;
 
@@ -16,8 +13,13 @@ public class App {
     private final AccountService accountService = new AccountService(API_BASE_URL);
     private final UserService userService = new UserService(API_BASE_URL);
     private final TransferService transferService = new TransferService(API_BASE_URL);
+    private final TransferTypeService transferTypeService = new TransferTypeService(API_BASE_URL);
 
     private AuthenticatedUser currentUser;
+
+    public enum TypeEnum {
+        SEND,REQUEST
+    }
 
     public static void main(String[] args) {
         App app = new App();
@@ -141,7 +143,7 @@ public class App {
         }
         accountService.update(getCurrentUserId(),currentAccount);
         accountService.update(userId,toAccount);
-        transferService.create(new Transfer(2,2,currentAccount.getId(),toAccount.getId(),transferAmount));
+        transferService.create(new Transfer(getTypeId(TypeEnum.SEND.name()),2,currentAccount.getId(),toAccount.getId(),transferAmount));
 
 		
 	}
@@ -169,6 +171,12 @@ public class App {
         }
         return accountService.getAccountByUserId(id) != null;
     }
+
+    private int getTypeId(String type) {
+        TransferType transferType = transferTypeService.getByType(type);
+        return Math.toIntExact(transferType.getTransferTypeId());
+    }
+
 
 
 }
