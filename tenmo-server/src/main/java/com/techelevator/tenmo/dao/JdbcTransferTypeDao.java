@@ -25,6 +25,19 @@ public class JdbcTransferTypeDao implements  TransferTypeDao{
         }
         return transferType;
     }
+
+    @Override
+    public TransferType getById(int id) {
+        TransferType transferType = null;
+        String sql = "SELECT transfer_type_id, transfer_type_desc FROM transfer_type " +
+                "WHERE transfer_type_id = ?;";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql,id);
+        if(results.next()) {
+            transferType = mapRowToTransferType(results);
+        }
+        return transferType;
+    }
+
     private TransferType mapRowToTransferType(SqlRowSet sql){
         TransferType transferType =  new TransferType();
         transferType.setTransferTypeId(sql.getInt("transfer_type_id"));

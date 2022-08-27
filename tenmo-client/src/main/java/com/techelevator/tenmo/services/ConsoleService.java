@@ -1,10 +1,7 @@
 package com.techelevator.tenmo.services;
 
 
-import com.techelevator.tenmo.model.Account;
-import com.techelevator.tenmo.model.Transfer;
-import com.techelevator.tenmo.model.User;
-import com.techelevator.tenmo.model.UserCredentials;
+import com.techelevator.tenmo.model.*;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
@@ -124,7 +121,10 @@ public class ConsoleService {
 
     public void printAvailableTransfers(Transfer[] transfers, UserService service) {
         for (Transfer transfer : transfers) {
-            System.out.printf("%-11d To: %-19s %s\n", transfer.getId(), service.getUserByAccountId(transfer.getToAccountId()).getUsername(),getFormattedAmount(transfer.getTransferAmount()));
+            System.out.printf("%-11d To: %-19s %s\n",
+                    transfer.getId(),
+                    service.getUserByAccountId(transfer.getToAccountId()).getUsername(),
+                    getFormattedAmount(transfer.getTransferAmount()));
         }
     }
 
@@ -132,4 +132,16 @@ public class ConsoleService {
         return numberFormat.format(amount);
     }
 
+    public void viewTransferDetails(int choice, TransferService transferService, TransferTypeService typeService, UserService userService) {
+        Transfer currentTransfer = transferService.getById(choice);
+        System.out.println("--------------------------------------------");
+        System.out.println("Transfer Details");
+        System.out.println("--------------------------------------------");
+        System.out.printf("ID:%15d\n",choice);
+        System.out.printf("From:%14s\n", userService.getUserByAccountId(currentTransfer.getFromAccountId()).getUsername());
+        System.out.printf("To:%17s\n", userService.getUserByAccountId(currentTransfer.getToAccountId()).getUsername());
+        System.out.printf("Type:%13s\n", typeService.getById(currentTransfer.getTransferTypeId()).getTransferTypeDesc());
+        System.out.printf("Status: \n");
+        System.out.printf("Amount:%14s\n", getFormattedAmount(currentTransfer.getTransferAmount()));
+    }
 }

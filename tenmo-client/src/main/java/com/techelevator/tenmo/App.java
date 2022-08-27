@@ -111,9 +111,13 @@ public class App {
         consoleService.printViewTransferHeader();
         consoleService.printAvailableTransfers(transferService.getAllTransfersByFromId(getCurrentAccount().getId()),userService);
         int choice = consoleService.promptForInt("Please enter transfer ID to view details (0 to cancel): ");
-        if(choice > 0) {//Change to == 0 when Transfer class exists
+        while (!isValidTransferId(choice)) {
+            choice = consoleService.promptForInt("Invalid Choice. Select a different ID (0 to cancel): ");
+        }
+        if(choice == 0) {
             return;
         }
+        consoleService.viewTransferDetails(choice, transferService, transferTypeService, userService);
 
 	}
 
@@ -174,6 +178,15 @@ public class App {
             return false;
         }
         return accountService.getAccountByUserId(id) != null;
+    }
+
+    private boolean isValidTransferId(int id) {
+        if(id == 0) {
+            return true;
+        }
+        else {
+            return transferService.getById(id) != null;
+        }
     }
 
     private int getTypeId(String type) {
