@@ -124,12 +124,12 @@ public class ConsoleService {
             String toFrom;
             int toFromId;
             if(transfer.getFromAccountId() == currentAccountId) {
-                toFrom = "From";
-                toFromId = transfer.getFromAccountId();
-            }
-            else if(transfer.getToAccountId() == currentAccountId) {
                 toFrom = "To";
                 toFromId = transfer.getToAccountId();
+            }
+            else if(transfer.getToAccountId() == currentAccountId) {
+                toFrom = "From";
+                toFromId = transfer.getFromAccountId();
             }
             else {
                 continue;

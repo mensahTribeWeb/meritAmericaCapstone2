@@ -111,6 +111,7 @@ public class App {
         consoleService.printViewTransferHeader();
         consoleService.printAvailableTransfers(transferService.getAllTransfers(), userService, getCurrentAccount().getId());
         int choice = consoleService.promptForInt("Please enter transfer ID to view details (0 to cancel): ");
+
         while (!isValidTransferId(choice)) {
             choice = consoleService.promptForInt("Invalid Choice. Select a different ID (0 to cancel): ");
         }
@@ -180,13 +181,24 @@ public class App {
         return accountService.getAccountByUserId(id) != null;
     }
 
+    /**
+     * Validates whether the ID provided is a valid transfer id the current user can view
+     * @param id The Transfer ID entered by current user
+     * @return True if id is a valid Transfer ID or 0, False otherwise
+     */
     private boolean isValidTransferId(int id) {
         if(id == 0) {
             return true;
         }
-        else {
-            return transferService.getById(id) != null;
+        else if (transferService.getById(id) == null){
+            return false;
         }
+        else if(transferService.getById(id).getFromAccountId() != getCurrentAccount().getId() &&
+                transferService.getById(id).getToAccountId() != getCurrentAccount().getId()) {
+            return false;
+        }
+        return true;
+
     }
 
     private int getTypeId(String type) {
