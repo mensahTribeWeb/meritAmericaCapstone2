@@ -145,7 +145,12 @@ public class ConsoleService {
         return numberFormat.format(amount);
     }
 
-    public void viewTransferDetails(int choice, TransferService transferService, TransferTypeService typeService, UserService userService) {
+    public void viewTransferDetails(
+            int choice,
+            TransferService transferService,
+            TransferTypeService typeService,
+            TransferStatusService statusService,
+            UserService userService) {
         Transfer currentTransfer = transferService.getById(choice);
 
         System.out.println("--------------------------------------------");
@@ -155,7 +160,7 @@ public class ConsoleService {
         System.out.printf("From:     %s\n", userService.getUserByAccountId(currentTransfer.getFromAccountId()).getUsername());
         System.out.printf("To:       %s\n", userService.getUserByAccountId(currentTransfer.getToAccountId()).getUsername());
         System.out.printf("Type:     %s\n", typeService.getById(currentTransfer.getTransferTypeId()).getTransferTypeDesc());
-        System.out.printf("Status:   %s\n", "NYI");
+        System.out.printf("Status:   %s\n", statusService.getById(currentTransfer.getTransferStatusId()).getTransferStatusDesc());
         System.out.printf("Amount:   %s\n", getFormattedAmount(currentTransfer.getTransferAmount()));
     }
 }

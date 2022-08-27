@@ -15,6 +15,7 @@ public class App {
     private final UserService userService = new UserService(API_BASE_URL);
     private final TransferService transferService = new TransferService(API_BASE_URL);
     private final TransferTypeService transferTypeService = new TransferTypeService(API_BASE_URL);
+    private final TransferStatusService transferStatusService = new TransferStatusService(API_BASE_URL);
 
     private AuthenticatedUser currentUser;
 
@@ -119,7 +120,7 @@ public class App {
         if(choice == 0) {
             return;
         }
-        consoleService.viewTransferDetails(choice, transferService, transferTypeService, userService);
+        consoleService.viewTransferDetails(choice, transferService, transferTypeService,transferStatusService, userService);
 
 	}
 
@@ -154,7 +155,12 @@ public class App {
         }
         accountService.update(getCurrentUserId(),currentAccount);
         accountService.update(userId,toAccount);
-        transferService.create(new Transfer(getTypeId(TypeEnum.SEND.name()),2,getCurrentAccount().getId(),toAccount.getId(),transferAmount));
+        transferService.create(new Transfer(
+                getTypeId(TypeEnum.SEND.name()),
+                getStatusId(StatusEnum.APPROVED.name()),
+                getCurrentAccount().getId(),
+                toAccount.getId(),
+                transferAmount));
 
 		
 	}
@@ -206,6 +212,11 @@ public class App {
     private int getTypeId(String type) {
         TransferType transferType = transferTypeService.getByType(type);
         return Math.toIntExact(transferType.getTransferTypeId());
+    }
+
+    private int getStatusId(String status) {
+        TransferStatus transferStatus = transferStatusService.getByType(status);
+        return Math.toIntExact(transferStatus.getTransferStatusId());
     }
 
     private Account getCurrentAccount() {
