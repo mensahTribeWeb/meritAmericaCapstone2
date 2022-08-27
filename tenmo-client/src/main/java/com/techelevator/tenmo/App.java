@@ -3,6 +3,7 @@ package com.techelevator.tenmo;
 import com.techelevator.tenmo.model.*;
 import com.techelevator.tenmo.services.*;
 import com.techelevator.util.BasicLogger;
+import io.cucumber.java.en_old.Ac;
 
 public class App {
 
@@ -142,15 +143,16 @@ public class App {
 
         double transferAmount = consoleService.promptForBigDecimal("Enter Amount to Send: ").doubleValue();
         Account toAccount = accountService.getAccountByUserId(userId);
+        Account currentAccount = accountService.getAccountByUserId(getCurrentUserId());
 
         try {
-            getCurrentAccount().transferTo(toAccount, transferAmount);
+            currentAccount.transferTo(toAccount, transferAmount);
         } catch (IllegalArgumentException e) {
             BasicLogger.log(e.getMessage());
             consoleService.printErrorMessage();
             return;
         }
-        accountService.update(getCurrentUserId(),getCurrentAccount());
+        accountService.update(getCurrentUserId(),currentAccount);
         accountService.update(userId,toAccount);
         transferService.create(new Transfer(getTypeId(TypeEnum.SEND.name()),2,getCurrentAccount().getId(),toAccount.getId(),transferAmount));
 

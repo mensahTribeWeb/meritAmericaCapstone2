@@ -10,3 +10,6 @@
 2022-08-27T10:12:11.5927316 500 : 
 2022-08-27T10:49:11.2631506 404 : [{"timestamp":"2022-08-27T14:49:11.246+00:00","status":404,"error":"Not Found","message":"No message available","path":"/transfers/type/2"}]
 2022-08-27T10:49:50.7798302 404 : [{"timestamp":"2022-08-27T14:49:50.764+00:00","status":404,"error":"Not Found","message":"No message available","path":"/transfers/type/2"}]
+2022-08-27T15:48:10.598121 I/O error on POST request for "http://localhost:8080/login": Connection refused: connect; nested exception is java.net.ConnectException: Connection refused: connect
+2022-08-27T15:48:15.9301604 I/O error on POST request for "http://localhost:8080/login": Connection refused: connect; nested exception is java.net.ConnectException: Connection refused: connect
+2022-08-27T15:48:24.0081402 I/O error on POST request for "http://localhost:8080/login": Connection refused: connect; nested exception is java.net.ConnectException: Connection refused: connect
