@@ -18,7 +18,7 @@ public class TransferController {
     private TransferDao transferDao;
 
 
-    private TransferDao transferDao;
+
 
 
 

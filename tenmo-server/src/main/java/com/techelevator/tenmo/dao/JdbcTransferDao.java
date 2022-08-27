@@ -70,10 +70,7 @@ public class JdbcTransferDao implements TransferDao{
         }
         return fetchedTransfer;
     }
-    @Override
-    public Transfer create(Transfer transfer){
 
-    }
 
     @Override
     public Transfer create(Transfer transfer) {
