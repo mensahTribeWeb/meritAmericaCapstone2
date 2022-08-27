@@ -1,10 +1,5 @@
 package com.techelevator.tenmo.model;
 
-<<<<<<< HEAD
-
-
-=======
->>>>>>> ccc0e071dd854b52c583f6988ed7a8d84415a546
 public class Transfer {
     private int id;
     private int transferTypeId;
