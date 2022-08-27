@@ -62,12 +62,11 @@ public class JdbcTransferDao implements TransferDao{
     @Override
     public Transfer getTransferDetails(int id) {
         Transfer fetchedTransfer = null;
-        String sql = "SELECT transfer_id, transfer_type_id, transfer_status_id, account_from, account_to, amount\n"+
-                        "FROM transfer\n" +
+        String sql = "SELECT transfer_id, transfer_type_id, transfer_status_id, account_from, account_to, amount "+
+                        "FROM transfer " +
                         "WHERE transfer_id = ?;";
-
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
-        while (results.next()) {
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql,id);
+        if (results.next()) {
             fetchedTransfer = mapRowToTransfer(results);
         }
         return fetchedTransfer;
@@ -93,7 +92,7 @@ public class JdbcTransferDao implements TransferDao{
         transfer.setTransfer_status_id(results.getInt("transfer_status_id"));
         transfer.setAccount_from(results.getInt("account_from"));
         transfer.setAccount_to(results.getInt("account_to"));
-        transfer.setTransfer_amount(results.getBigDecimal("amount"));
+        transfer.setTransfer_amount(results.getDouble("amount"));
         return transfer;
     }
 //Test
