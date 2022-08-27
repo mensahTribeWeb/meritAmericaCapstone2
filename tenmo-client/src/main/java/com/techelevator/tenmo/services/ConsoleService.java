@@ -122,9 +122,9 @@ public class ConsoleService {
 
     }
 
-    public void printAvailableTransfers(Transfer[] transfers) {
+    public void printAvailableTransfers(Transfer[] transfers, UserService service) {
         for (Transfer transfer : transfers) {
-            System.out.printf("%-11d To: %-15d %s\n", transfer.getId(),transfer.getToAccountId(),getFormattedAmount(transfer.getTransferAmount()));
+            System.out.printf("%-11d To: %-19s %s\n", transfer.getId(), service.getUserByAccountId(transfer.getToAccountId()).getUsername(),getFormattedAmount(transfer.getTransferAmount()));
         }
     }
 

@@ -62,6 +62,11 @@ public class AuthenticationController {
         return userDao.findAll();
     }
 
+    @GetMapping("users/account/{id}")
+    public User findByAccountId(@PathVariable int id) {
+        return userDao.findByAccountId(id);
+    }
+
     /**
      * Object to return as body in JWT Authentication.
      */
