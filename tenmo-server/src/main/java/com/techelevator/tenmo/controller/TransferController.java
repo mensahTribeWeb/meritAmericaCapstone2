@@ -1,22 +1,20 @@
 package com.techelevator.tenmo.controller;
 
-import com.techelevator.tenmo.dao.AccountDao;
-import com.techelevator.tenmo.dao.JdbcTransferDao;
 import com.techelevator.tenmo.dao.TransferDao;
-import com.techelevator.tenmo.model.Account;
+import com.techelevator.tenmo.dao.TransferTypeDao;
 import com.techelevator.tenmo.model.Transfer;
-import org.springframework.security.access.prepost.PreAuthorize;
+import com.techelevator.tenmo.model.TransferType;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
+import java.util.List;
 
 @RestController
-@PreAuthorize("isAuthenticated()")
+@RequestMapping(value = "transfers")
 public class TransferController {
-
 
     private TransferDao transferDao;
 
+<<<<<<< HEAD
 
 
 
@@ -24,12 +22,31 @@ public class TransferController {
 
 
     public TransferController(JdbcTransferDao transferDao) {
+=======
+    public TransferController(TransferDao transferDao) {
+>>>>>>> ccc0e071dd854b52c583f6988ed7a8d84415a546
         this.transferDao = transferDao;
     }
 
-
-    @PostMapping(value = "transfers")
-    public Transfer create(@RequestBody Transfer transfer) {
-       return transferDao.create(transfer);
+    @GetMapping
+    public List<Transfer> listAll() {
+        return transferDao.listAll();
     }
+
+    @GetMapping(value = "/account/{id}")
+    public List<Transfer> listAllWithFromId(@PathVariable int id) {
+        return transferDao.listAllWithFromId(id);
+    }
+
+    @GetMapping(value = "/{id}")
+    public Transfer findById(@PathVariable int id) {
+        return transferDao.findById(id);
+    }
+
+    @PostMapping
+    public Transfer create(@RequestBody Transfer transfer) {
+        return transferDao.create(transfer);
+    }
+
+
 }

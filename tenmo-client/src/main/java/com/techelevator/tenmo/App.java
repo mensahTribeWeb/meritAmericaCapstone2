@@ -137,11 +137,11 @@ public class App {
         } catch (IllegalArgumentException e) {
             BasicLogger.log(e.getMessage());
             consoleService.printErrorMessage();
+            return;
         }
         accountService.update(getCurrentUserId(),currentAccount);
         accountService.update(userId,toAccount);
-        transferService.createTransfer(new Transfer(2,2, currentAccount.getId(), toAccount.getId(), transferAmount));
-
+        transferService.create(new Transfer(2,2,currentAccount.getId(),toAccount.getId(),transferAmount));
 
 		
 	}

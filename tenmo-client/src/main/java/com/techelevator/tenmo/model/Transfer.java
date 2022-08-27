@@ -1,78 +1,74 @@
 package com.techelevator.tenmo.model;
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> ccc0e071dd854b52c583f6988ed7a8d84415a546
 public class Transfer {
-    private int transfer_id;
-    private int transfer_type_id;
-    private int transfer_status_id;
-    private int account_from;
-    private int account_to;
-    private double transfer_amount;
+    private int id;
+    private int transferTypeId;
+    private int transferStatusId;
+    private int fromAccountId;
+    private int toAccountId;
+    private double transferAmount;
 
     public Transfer() {
     }
 
-    public Transfer(int transfer_type_id,
-                    int transfer_status_id,
-                    int account_from,
-                    int account_to,
-                    double transfer_amount) {
-        this.transfer_type_id = transfer_type_id;
-        this.transfer_status_id = transfer_status_id;
-        this.account_from = account_from;
-        this.account_to = account_to;
-        this.transfer_amount = transfer_amount;
-    }
-    //Getters
-
-    public int getTransfer_id() {
-        return transfer_id;
+    public Transfer(int transferTypeId, int transferStatusId, int fromAccountId, int toAccountId, double transferAmount) {
+        this.transferTypeId = transferTypeId;
+        this.transferStatusId = transferStatusId;
+        this.fromAccountId = fromAccountId;
+        this.toAccountId = toAccountId;
+        this.transferAmount = transferAmount;
     }
 
-    public int getTransfer_type_id() {
-        return transfer_type_id;
+    public int getId() {
+        return id;
     }
 
-    public int getTransfer_status_id() {
-        return transfer_status_id;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public int getAccount_from() {
-        return account_from;
+    public int getTransferTypeId() {
+        return transferTypeId;
     }
 
-    public int getAccount_to() {
-        return account_to;
+    public void setTransferTypeId(int transferTypeId) {
+        this.transferTypeId = transferTypeId;
     }
 
-    public double getTransfer_amount() {
-        return transfer_amount;
+    public int getTransferStatusId() {
+        return transferStatusId;
     }
 
-    //Setters
-
-    public void setTransfer_id(int transfer_id) {
-        this.transfer_id = transfer_id;
+    public void setTransferStatusId(int transferStatusId) {
+        this.transferStatusId = transferStatusId;
     }
 
-    public void setTransfer_type_id(int transfer_type_id) {
-        this.transfer_type_id = transfer_type_id;
+    public int getFromAccountId() {
+        return fromAccountId;
     }
 
-    public void setTransfer_status_id(int transfer_status_id) {
-        this.transfer_status_id = transfer_status_id;
+    public void setFromAccountId(int fromAccountId) {
+        this.fromAccountId = fromAccountId;
     }
 
-    public void setAccount_from(int account_from) {
-        this.account_from = account_from;
+    public int getToAccountId() {
+        return toAccountId;
     }
 
-    public void setAccount_to(int account_to) {
-        this.account_to = account_to;
+    public void setToAccountId(int toAccountId) {
+        this.toAccountId = toAccountId;
     }
 
-    public void setTransfer_amount(double transfer_amount) {
-        this.transfer_amount = transfer_amount;
+    public double getTransferAmount() {
+        return transferAmount;
+    }
+
+    public void setTransferAmount(double transferAmount) {
+        this.transferAmount = transferAmount;
     }
 }
