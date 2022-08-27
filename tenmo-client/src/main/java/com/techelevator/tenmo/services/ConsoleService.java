@@ -119,11 +119,24 @@ public class ConsoleService {
 
     }
 
-    public void printAvailableTransfers(Transfer[] transfers, UserService service) {
+    public void printAvailableTransfers(Transfer[] transfers, UserService service, int currentAccountId) {
         for (Transfer transfer : transfers) {
-            System.out.printf("%-11d To: %-19s %s\n",
+            String toFrom;
+            int toFromId;
+            if(transfer.getFromAccountId() == currentAccountId) {
+                toFrom = "From";
+                toFromId = transfer.getFromAccountId();
+            }
+            else if(transfer.getToAccountId() == currentAccountId) {
+                toFrom = "To";
+                toFromId = transfer.getToAccountId();
+            }
+            else {
+                continue;
+            }
+            System.out.printf("%-11d %-5s: %-15s %s\n",
                     transfer.getId(),
-                    service.getUserByAccountId(transfer.getToAccountId()).getUsername(),
+                    toFrom, service.getUserByAccountId(toFromId).getUsername(),
                     getFormattedAmount(transfer.getTransferAmount()));
         }
     }
@@ -134,14 +147,15 @@ public class ConsoleService {
 
     public void viewTransferDetails(int choice, TransferService transferService, TransferTypeService typeService, UserService userService) {
         Transfer currentTransfer = transferService.getById(choice);
+
         System.out.println("--------------------------------------------");
         System.out.println("Transfer Details");
         System.out.println("--------------------------------------------");
-        System.out.printf("ID:%15d\n",choice);
-        System.out.printf("From:%14s\n", userService.getUserByAccountId(currentTransfer.getFromAccountId()).getUsername());
-        System.out.printf("To:%17s\n", userService.getUserByAccountId(currentTransfer.getToAccountId()).getUsername());
-        System.out.printf("Type:%13s\n", typeService.getById(currentTransfer.getTransferTypeId()).getTransferTypeDesc());
-        System.out.printf("Status: \n");
-        System.out.printf("Amount:%14s\n", getFormattedAmount(currentTransfer.getTransferAmount()));
+        System.out.printf("ID:       %d\n",choice);
+        System.out.printf("From:     %s\n", userService.getUserByAccountId(currentTransfer.getFromAccountId()).getUsername());
+        System.out.printf("To:       %s\n", userService.getUserByAccountId(currentTransfer.getToAccountId()).getUsername());
+        System.out.printf("Type:     %s\n", typeService.getById(currentTransfer.getTransferTypeId()).getTransferTypeDesc());
+        System.out.printf("Status:   %s\n", "NYI");
+        System.out.printf("Amount:   %s\n", getFormattedAmount(currentTransfer.getTransferAmount()));
     }
 }

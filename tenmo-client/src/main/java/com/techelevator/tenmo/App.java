@@ -109,7 +109,7 @@ public class App {
 	private void viewTransferHistory() {
 		// TODO Auto-generated method stub
         consoleService.printViewTransferHeader();
-        consoleService.printAvailableTransfers(transferService.getAllTransfersByFromId(getCurrentAccount().getId()),userService);
+        consoleService.printAvailableTransfers(transferService.getAllTransfers(), userService, getCurrentAccount().getId());
         int choice = consoleService.promptForInt("Please enter transfer ID to view details (0 to cancel): ");
         while (!isValidTransferId(choice)) {
             choice = consoleService.promptForInt("Invalid Choice. Select a different ID (0 to cancel): ");
