@@ -13,21 +13,20 @@ import java.math.BigDecimal;
 @RestController
 @PreAuthorize("isAuthenticated()")
 public class TransferController {
-<<<<<<< HEAD
 
-    private TransferDao transferDao;
-=======
->>>>>>> 324765135d6229d74dbdbaac819ae3f4b40315e6
 
     private TransferDao transferDao;
 
-<<<<<<< HEAD
 
-=======
+    private TransferDao transferDao;
+
+
+
+
     public TransferController(JdbcTransferDao transferDao) {
         this.transferDao = transferDao;
     }
->>>>>>> 324765135d6229d74dbdbaac819ae3f4b40315e6
+
 
     @PostMapping(value = "transfers")
     public Transfer create(@RequestBody Transfer transfer) {

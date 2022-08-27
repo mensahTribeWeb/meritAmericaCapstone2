@@ -11,9 +11,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 public class TransferService {
-<<<<<<< HEAD
-//    transferService.create(new Transfer(2, 2, account_from, account_to, transferAmount));
-=======
+
 
     private final RestTemplate restTemplate = new RestTemplate();
     private final String baseUrl;
@@ -53,6 +51,6 @@ public class TransferService {
         return new HttpEntity<>(headers);
     }
 
->>>>>>> 324765135d6229d74dbdbaac819ae3f4b40315e6
+
 
 }
