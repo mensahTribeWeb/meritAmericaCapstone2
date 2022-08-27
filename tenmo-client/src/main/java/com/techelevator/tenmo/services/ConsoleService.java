@@ -2,6 +2,7 @@ package com.techelevator.tenmo.services;
 
 
 import com.techelevator.tenmo.model.Account;
+import com.techelevator.tenmo.model.Transfer;
 import com.techelevator.tenmo.model.User;
 import com.techelevator.tenmo.model.UserCredentials;
 
@@ -12,6 +13,7 @@ import java.util.Scanner;
 public class ConsoleService {
 
     private final Scanner scanner = new Scanner(System.in);
+    private final NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
 
     public int promptForMenuSelection(String prompt) {
         int menuSelection;
@@ -102,7 +104,7 @@ public class ConsoleService {
     }
 
     public void printAccountBalance(Account account) {
-        System.out.printf("Your current account balance is: %s\n", NumberFormat.getCurrencyInstance().format(account.getBalance()));
+        System.out.printf("Your current account balance is: %s\n", getFormattedAmount(account.getBalance()));
     }
 
     public void printSendFundsHeader() {
@@ -119,4 +121,15 @@ public class ConsoleService {
         System.out.println("-------------------------------------------");
 
     }
+
+    public void printAvailableTransfers(Transfer[] transfers) {
+        for (Transfer transfer : transfers) {
+            System.out.printf("%-11d To: %-15d %s\n", transfer.getId(),transfer.getToAccountId(),getFormattedAmount(transfer.getTransferAmount()));
+        }
+    }
+
+    private String getFormattedAmount(double amount) {
+        return numberFormat.format(amount);
+    }
+
 }

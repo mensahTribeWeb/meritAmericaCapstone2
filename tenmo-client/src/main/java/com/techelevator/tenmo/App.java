@@ -21,6 +21,10 @@ public class App {
         SEND,REQUEST
     }
 
+    public enum StatusEnum {
+        APPROVED,PENDING,REJECTED
+    }
+
     public static void main(String[] args) {
         App app = new App();
         app.run();
@@ -97,7 +101,7 @@ public class App {
 	private void viewCurrentBalance() {
 		// TODO Auto-generated method stub
 
-        consoleService.printAccountBalance(accountService.getAccountByUserId(getCurrentUserId()));
+        consoleService.printAccountBalance(getCurrentAccount());
 
 		
 	}
@@ -105,7 +109,7 @@ public class App {
 	private void viewTransferHistory() {
 		// TODO Auto-generated method stub
         consoleService.printViewTransferHeader();
-        //TODO Print List of Transfers here
+        consoleService.printAvailableTransfers(transferService.getAllTransfersByFromId(accountService.getAccountByUserId(getCurrentUserId()).getId()));
         int choice = consoleService.promptForInt("Please enter transfer ID to view details (0 to cancel): ");
         if(choice > 0) {//Change to == 0 when Transfer class exists
             return;
@@ -133,17 +137,17 @@ public class App {
 
         double transferAmount = consoleService.promptForBigDecimal("Enter Amount to Send: ").doubleValue();
         Account toAccount = accountService.getAccountByUserId(userId);
-        Account currentAccount = accountService.getAccountByUserId(getCurrentUserId());
+
         try {
-            currentAccount.transferTo(toAccount, transferAmount);
+            getCurrentAccount().transferTo(toAccount, transferAmount);
         } catch (IllegalArgumentException e) {
             BasicLogger.log(e.getMessage());
             consoleService.printErrorMessage();
             return;
         }
-        accountService.update(getCurrentUserId(),currentAccount);
+        accountService.update(getCurrentUserId(),getCurrentAccount());
         accountService.update(userId,toAccount);
-        transferService.create(new Transfer(getTypeId(TypeEnum.SEND.name()),2,currentAccount.getId(),toAccount.getId(),transferAmount));
+        transferService.create(new Transfer(getTypeId(TypeEnum.SEND.name()),2,getCurrentAccount().getId(),toAccount.getId(),transferAmount));
 
 		
 	}
@@ -175,6 +179,10 @@ public class App {
     private int getTypeId(String type) {
         TransferType transferType = transferTypeService.getByType(type);
         return Math.toIntExact(transferType.getTransferTypeId());
+    }
+
+    private Account getCurrentAccount() {
+        return accountService.getAccountByUserId(getCurrentUserId());
     }
 
 
