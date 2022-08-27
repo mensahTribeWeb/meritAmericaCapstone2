@@ -1,77 +1,93 @@
 package com.techelevator.tenmo.dao;
-        import com.techelevator.tenmo.model.Transfer;
-        import org.springframework.jdbc.core.JdbcTemplate;
-        import org.springframework.jdbc.support.rowset.SqlRowSet;
 
-        import java.util.ArrayList;
-        import java.util.List;
+import com.techelevator.tenmo.model.Transfer;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
+@Component
 public class JdbcTransferDao implements TransferDao{
-    //properties
+
     private JdbcTemplate jdbcTemplate;
-    private JdbcAccountDao jdbcAccountDao;
-    //constructor
 
-    public JdbcTransferDao(JdbcTemplate jdbcTemplate, JdbcAccountDao jdbcAccountDao) {
+    public JdbcTransferDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
-        this.jdbcAccountDao = jdbcAccountDao;
-    }
-
-
-
-    @Override
-    public void sendTransfer(Transfer transfer) {
-        String sql = "INSERT INTO transfer (transfer_type_id, transfer_status_id, account_from, account_to, amount)\n"+
-                    "VALUES(2, 2, (SELECT account_id FROM accounts WHERE user_id = ?), ?);";
-        jdbcTemplate.update(sql, transfer.getAccount_from(), transfer.getAccount_to(), transfer.getTransfer_amount());
     }
 
     @Override
-    public List<Transfer> getTransferHistory(int id) {
-        List<Transfer> transferHistory = new ArrayList<>();
-        String sql = "SELECT transfer_id, transfer_type_id, transfer_status_id, account_from, account_to, amount\n"+
-                "FROM transfer\n" +
-                "JOIN accounts ON transfer.account_from = account.account_id" +
-                "JOIN users ON account.user_id = users.user_id\n"+
-                "WHERE user.id = ?;";
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, id);
-        while (results.next()) {
-           Transfer transfer = mapRowToTransfer(results);
-           transferHistory.add(transfer);
-        }
-        return transferHistory;
-
-//        SELECT transfer_id, transfer_type_id, transfer_status_id, account_from, account_to, amount
-//        FROM transfer
-//        JOIN account ON transfer.account_from = account.account_id
-//        JOIN tenmo_user ON account.user_id = tenmo_user.user_id
-//        WHERE tenmo_user.user_id = 1001;
-    }
-
-    @Override
-    public Transfer getTransferDetails(int id) {
-        Transfer fetchedTransfer = null;
-        String sql = "SELECT transfer_id, transfer_type_id, transfer_status_id, account_from, account_to, amount\n"+
-                        "FROM transfer\n" +
-                        "WHERE transfer_id = ?;";
-
+    public List<Transfer> listAll() {
+        List<Transfer> transfers = new ArrayList<>();
+        String sql = "SELECT transfer_id, " +
+                "transfer_type_id, " +
+                "transfer_status_id, " +
+                "account_from, " +
+                "account_to, " +
+                "amount FROM transfer;";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
-        while (results.next()) {
-            fetchedTransfer = mapRowToTransfer(results);
+        while(results.next()) {
+            transfers.add(mapRowToTransfer(results));
         }
-        return fetchedTransfer;
+        return transfers;
     }
 
-    private Transfer mapRowToTransfer(SqlRowSet results) {
-        Transfer transfer = new Transfer();
-        transfer.setTransfer_id(results.getInt("transfer_id"));
-        transfer.setTransfer_type_id(results.getInt("transfer_type_id"));
-        transfer.setTransfer_status_id(results.getInt("transfer_status_id"));
-        transfer.setAccount_from(results.getInt("account_from"));
-        transfer.setAccount_to(results.getInt("account_to"));
-        transfer.setTransfer_amount(results.getBigDecimal("account"));
+    @Override
+    public Transfer findById(int id) {
+        Transfer transfer = null;
+        String sql = "SELECT transfer_id, " +
+                "transfer_type_id, " +
+                "transfer_status_id, " +
+                "account_from, " +
+                "account_to, " +
+                "amount FROM transfer WHERE transfer_id = ?;";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql,id);
+        if(results.next()) {
+            transfer = mapRowToTransfer(results);
+        }
         return transfer;
     }
 
+    @Override
+    public Transfer create(Transfer transfer) {
+        String sql = "INSERT INTO transfer (transfer_type_id, transfer_status_id, account_from, account_to, amount) " +
+                "values(?,?,?,?,?) returning transfer_id;";
+        int transferId = jdbcTemplate.queryForObject(sql, int.class,
+                transfer.getTransferTypeId(),
+                transfer.getTransferStatusId(),
+                transfer.getFromAccountId(),
+                transfer.getToAccountId(),
+                transfer.getTransferAmount());
+        return findById(transferId);
+    }
+
+    @Override
+    public List<Transfer> listAllWithFromId(int id) {
+        List<Transfer> transfers = new ArrayList<>();
+        String sql = "SELECT transfer_id, " +
+                "transfer_type_id, " +
+                "transfer_status_id, " +
+                "account_from, " +
+                "account_to, " +
+                "amount FROM transfer WHERE account_from = ?;";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql,id);
+        while(results.next()) {
+            transfers.add(mapRowToTransfer(results));
+        }
+        return transfers;
+    }
+
+
+    private Transfer mapRowToTransfer(SqlRowSet results) {
+        Transfer transfer = new Transfer();
+        transfer.setId(results.getInt("transfer_id"));
+        transfer.setTransferTypeId(results.getInt("transfer_type_id"));
+        transfer.setTransferStatusId(results.getInt("transfer_status_id"));
+        transfer.setFromAccountId(results.getInt("account_from"));
+        transfer.setToAccountId(results.getInt("account_to"));
+        transfer.setTransferAmount(results.getDouble("amount"));
+        return transfer;
+    }
 
 }

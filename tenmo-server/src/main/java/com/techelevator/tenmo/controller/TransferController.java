@@ -1,31 +1,42 @@
 package com.techelevator.tenmo.controller;
 
-import com.techelevator.tenmo.dao.AccountDao;
 import com.techelevator.tenmo.dao.TransferDao;
-import com.techelevator.tenmo.model.Account;
+import com.techelevator.tenmo.dao.TransferTypeDao;
 import com.techelevator.tenmo.model.Transfer;
-import org.springframework.security.access.prepost.PreAuthorize;
+import com.techelevator.tenmo.model.TransferType;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
+import java.util.List;
 
 @RestController
-@PreAuthorize("isAuthenticated()")
+@RequestMapping(value = "transfers")
 public class TransferController {
-    TransferDao transferDao;
 
+    private TransferDao transferDao;
 
-//
-//    @GetMapping ("/balance/{id}")
-//    public BigDecimal getBalance(@PathVariable Long id){
-//        BigDecimal balance = AccountDao.getTransferHistory(Long id);
-//        return balance;
-//    }
-//
-//    //V. The sender's account balance is decreased by the amount of the transfer.
-//    @PutMapping("/tenmo_user/balance")
-//    public void transfer.Create(@RequestBody Transfer transfer){
-//        dao.update
-//    }
+    public TransferController(TransferDao transferDao) {
+        this.transferDao = transferDao;
+    }
+
+    @GetMapping
+    public List<Transfer> listAll() {
+        return transferDao.listAll();
+    }
+
+    @GetMapping(value = "/account/{id}")
+    public List<Transfer> listAllWithFromId(@PathVariable int id) {
+        return transferDao.listAllWithFromId(id);
+    }
+
+    @GetMapping(value = "/{id}")
+    public Transfer findById(@PathVariable int id) {
+        return transferDao.findById(id);
+    }
+
+    @PostMapping
+    public Transfer create(@RequestBody Transfer transfer) {
+        return transferDao.create(transfer);
+    }
+
 
 }

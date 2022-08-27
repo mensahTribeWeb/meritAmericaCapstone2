@@ -2,85 +2,64 @@ package com.techelevator.tenmo.model;
 
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
-import java.math.BigDecimal;
+
 
 public class Transfer {
-    //properties
-    private int transfer_id;
-    private int transfer_type_id;
-    private int transfer_status_id;
+    private int id;
+    private int transferTypeId;
+    private int transferStatusId;
     @NotBlank(message = "A transfer must originate from a valid user.")
-    private int account_from;
+    private int fromAccountId;
     @NotBlank(message = "A transfer must be sent to a valid user.")
-    private int account_to;
+    private int toAccountId;
     @DecimalMin(value = "0.01", message = "A transfer must have a minimum value of 0.01")
-    private BigDecimal transfer_amount;
-    //Constructors
-    public Transfer() {
+    private double transferAmount;
+
+    public int getId() {
+        return id;
     }
 
-    public Transfer(int transfer_id,
-                    int transfer_type_id,
-                    int transfer_status_id,
-                    int account_from,
-                    int account_to,
-                    BigDecimal transfer_amount) {
-        this.transfer_id = transfer_id;
-        this.transfer_type_id = transfer_type_id;
-        this.transfer_status_id = transfer_status_id;
-        this.account_from = account_from;
-        this.account_to = account_to;
-        this.transfer_amount = transfer_amount;
-    }
-    //Getters
-
-    public int getTransfer_id() {
-        return transfer_id;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public int getTransfer_type_id() {
-        return transfer_type_id;
+    public int getTransferTypeId() {
+        return transferTypeId;
     }
 
-    public int getTransfer_status_id() {
-        return transfer_status_id;
+    public void setTransferTypeId(int transferTypeId) {
+        this.transferTypeId = transferTypeId;
     }
 
-    public int getAccount_from() {
-        return account_from;
+    public int getTransferStatusId() {
+        return transferStatusId;
     }
 
-    public int getAccount_to() {
-        return account_to;
+    public void setTransferStatusId(int transferStatusId) {
+        this.transferStatusId = transferStatusId;
     }
 
-    public BigDecimal getTransfer_amount() {
-        return transfer_amount;
+    public int getFromAccountId() {
+        return fromAccountId;
     }
 
-    //Setters
-
-    public void setTransfer_id(int transfer_id) {
-        this.transfer_id = transfer_id;
+    public void setFromAccountId(int fromAccountId) {
+        this.fromAccountId = fromAccountId;
     }
 
-    public void setTransfer_type_id(int transfer_type_id) {
-        this.transfer_type_id = transfer_type_id;
+    public int getToAccountId() {
+        return toAccountId;
     }
 
-    public void setTransfer_status_id(int transfer_status_id) {
-        this.transfer_status_id = transfer_status_id;
+    public void setToAccountId(int toAccountId) {
+        this.toAccountId = toAccountId;
     }
 
-    public void setAccount_from(int account_from) {
-        this.account_from = account_from;
+    public double getTransferAmount() {
+        return transferAmount;
     }
 
-    public void setAccount_to(int account_to) {
-        this.account_to = account_to;
-    }
-
-    public void setTransfer_amount(BigDecimal transfer_amount) {
-        this.transfer_amount = transfer_amount;
+    public void setTransferAmount(double transferAmount) {
+        this.transferAmount = transferAmount;
     }
 }
