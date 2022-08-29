@@ -48,7 +48,7 @@ public class TransferService {
         }
         return transfers;
     }
-    public Transfer[] getAllTransfersByFromId(int id) {
+    public Transfer[] getAllTransfersByAccountId(int id) {
         Transfer[] transfers = null;
         try {
             ResponseEntity<Transfer[]> response = restTemplate.exchange(baseUrl + "transfers/account/" + id, HttpMethod.GET, makeAuthEntity(), Transfer[].class);

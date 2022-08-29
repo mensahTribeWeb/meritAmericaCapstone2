@@ -3,9 +3,11 @@ package com.techelevator.tenmo.controller;
 import com.techelevator.tenmo.dao.AccountDao;
 import com.techelevator.tenmo.dao.JdbcAccountDao;
 import com.techelevator.tenmo.model.Account;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.security.Principal;
 
 @RestController
@@ -24,7 +26,8 @@ public class AccountController {
     }
 
     @PutMapping(value = "{id}/account")
-    public void update(@PathVariable int id, @RequestBody Account account) {
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void update(@PathVariable int id, @Valid @RequestBody Account account) {
         accountDao.update(id, account);
     }
 }

@@ -7,6 +7,7 @@ import com.techelevator.tenmo.model.TransferType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -27,7 +28,7 @@ public class TransferController {
 
     @GetMapping(value = "/account/{id}")
     public List<Transfer> listAllWithFromId(@PathVariable int id) {
-        return transferDao.listAllWithFromId(id);
+        return transferDao.listAllWithAccountId(id);
     }
 
     @GetMapping(value = "/{id}")
@@ -36,7 +37,7 @@ public class TransferController {
     }
 
     @PostMapping
-    public Transfer create(@RequestBody Transfer transfer) {
+    public Transfer create(@Valid @RequestBody Transfer transfer) {
         return transferDao.create(transfer);
     }
 

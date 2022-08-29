@@ -1,16 +1,22 @@
 package com.techelevator.tenmo.model;
 
+import org.hibernate.validator.constraints.Range;
+
 import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 
 public class Transfer {
+
     private int id;
+
+    @Range(min = 1, max = 2, message = "A transferTypeId may only be 1 or 2")
     private int transferTypeId;
+    @Range(min = 1, max = 3, message = "A transferTypeStatus may only be 1, 2 or 3")
     private int transferStatusId;
-    @NotBlank(message = "A transfer must originate from a valid user.")
+    @NotNull(message = "A transfer must originate from a valid user.")
     private int fromAccountId;
-    @NotBlank(message = "A transfer must be sent to a valid user.")
+    @NotNull(message = "A transfer must be sent to a valid user.")
     private int toAccountId;
     @DecimalMin(value = "0.01", message = "A transfer must have a minimum value of 0.01")
     private double transferAmount;

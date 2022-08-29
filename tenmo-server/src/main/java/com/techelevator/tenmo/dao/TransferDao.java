@@ -11,5 +11,5 @@ public interface TransferDao {
 
     Transfer create(Transfer transfer);
 
-    List<Transfer> listAllWithFromId(int id);
+    List<Transfer> listAllWithAccountId(int id);
 }

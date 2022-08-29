@@ -121,14 +121,14 @@ public class ConsoleService {
 
     /**
      * Prints all available transfer history a user has access too.
-     * @param transfers An array of all available transfers
-     * @param service The UserService to handle User based requests
+     * @param transferService The TransferService used to retrieve a list of transfers
+     * @param userService The UserService to handle User based requests
      * @param currentAccountId The current User's account Id; used to determine which transfers the user can see
      */
-    public void printAvailableTransfers(Transfer[] transfers, UserService service, int currentAccountId) {
-        for (Transfer transfer : transfers) {
-            String toFrom;
-            int toFromId;
+    public void printAvailableTransfers(TransferService transferService, UserService userService, int currentAccountId) {
+        for (Transfer transfer : transferService.getAllTransfersByAccountId(currentAccountId)) {
+            String toFrom ="";
+            int toFromId =0;
             if(transfer.getFromAccountId() == currentAccountId) {
                 toFrom = "To";
                 toFromId = transfer.getToAccountId();
@@ -137,14 +137,14 @@ public class ConsoleService {
                 toFrom = "From";
                 toFromId = transfer.getFromAccountId();
             }
-            else {
-                continue;
-            }
+
             System.out.printf("%-11d %-5s: %-15s %s\n",
                     transfer.getId(),
-                    toFrom, service.getUserByAccountId(toFromId).getUsername(),
+                    toFrom, userService.getUserByAccountId(toFromId).getUsername(),
                     getFormattedAmount(transfer.getTransferAmount()));
         }
+
+
     }
 
     /**
